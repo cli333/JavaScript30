@@ -96,6 +96,41 @@
   </div>
 
 <script>
+    // select all input boxes
+    // add click event to each box
+    // first click set to lastChecked
+      // if shift is pressed and the current box(lastCheckd) is checked
+      // loop over all boxes
+      // if another box is clicked while shift is pressed
+      // set this new box as lastChecked
+      // toggle inbetween to true
+      // while true check all boxes
+    // NOT inbetween boxes, boxes between 'first' checkd and 'last' checked should not be checked
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]')
+
+    let lastChecked
+
+    function handleCheck(e) {
+      let inBetween = false
+      if (e.shiftKey && this.checked) {
+        checkboxes.forEach(checkbox => {
+          if (checkbox === this || checkbox === lastChecked) {
+            // if selecting first box, set inBetween to true
+            // if selecting last box, set inBetween to false
+            inBetween = !inBetween
+            console.log('toggling inbetween')
+          }
+          if (inBetween) {
+            checkbox.checked = true
+            console.log('in the inBetween')
+          }
+        })
+      }
+
+      lastChecked = this
+    }
+    
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck))
 </script>
 </body>
 </html>
