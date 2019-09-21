@@ -27,6 +27,33 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+
+    // highlights all a tags on mouseenter
+    const triggers = document.querySelectorAll('a')
+    const highlight = document.createElement('span')
+    highlight.classList.add('highlight')
+    document.body.append(highlight)
+
+    function highlightLink() {
+      // find width and height of the element
+      const linkCoords = this.getBoundingClientRect()
+      // apply those properties to the span tag
+      highlight.style.width =  `${linkCoords.width}px`
+      highlight.style.height =  `${linkCoords.height}px`
+      // change positoin of the span tag
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top + window.scrollY, // add the scroll x and y to translate() to account for scrolling
+        left: linkCoords.left + window.scrollX
+      }
+
+      highlight.style.transform = `translate(${coords.left}px, ${coords.top}px)`
+
+    }
+
+    triggers.forEach(a => a.addEventListener('mouseenter', highlightLink))
+
   </script>
 </body>
 </html>
