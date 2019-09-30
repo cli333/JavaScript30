@@ -1,48 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Understanding JavaScript's Capture</title>
-</head>
-<body class="bod">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Understanding JavaScript's Capture</title>
+	</head>
+	<body class="bod">
+		<div class="one">
+			<div class="two">
+				<div class="three"></div>
+			</div>
+		</div>
 
-  <div class="one">
-    <div class="two">
-      <div class="three">
-      </div>
-    </div>
-  </div>
+		<style>
+			html {
+				box-sizing: border-box;
+			}
 
-<style>
-  html {
-    box-sizing: border-box;
-  }
-  
-  *, *:before, *:after { 
-    box-sizing: inherit; 
-  }
+			*,
+			*:before,
+			*:after {
+				box-sizing: inherit;
+			}
 
-  div {
-    width: 100%;
-    padding: 100px;
-  }
+			div {
+				width: 100%;
+				padding: 100px;
+			}
 
-  .one {
-    background: thistle;
-  }
+			.one {
+				background: thistle;
+			}
 
-  .two {
-    background: mistyrose;
-  }
+			.two {
+				background: mistyrose;
+			}
 
-  .three {
-    background: coral;
-  }
-</style>
+			.three {
+				background: coral;
+			}
+		</style>
 
-<button></button>
-<script>
+		<button></button>
+		<script>
+			const divs = document.querySelectorAll('div');
 
-</script>
-</body>
+			function logText(e) {
+				e.stopPropagation();
+				console.log(this.classList.value);
+			}
+
+			// capture option on addEventlistener, will make events bubbleup or down, default is bubbleup
+			// by default click event will bubbledown, will find top most element clicked on, then move down until
+			// the most child element clicked on, then function will run on the child element, and bubbleup
+			// for each parent elemnt
+
+			// e.stopPropagation used in conjunction with {capture: true} will only fire off the parent most element
+			// and stop
+
+			// adding {once: true}, will cause the event to unbind itself
+			// same as div.removeEventListener('click')
+			divs.forEach(div => div.addEventListener('click', logText, { capture: false, once: true }));
+		</script>
+	</body>
 </html>
